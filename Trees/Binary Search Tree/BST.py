@@ -79,6 +79,18 @@ class BinarySearchTree:
             return x+y+1
         return 0
 
+    def height(self, troot):
+        if troot:
+            x = self.height(troot._left)
+            y = self.height(troot._right)
+
+            if x > y:
+                return x + 1
+            else:
+                return y + 1
+        return -1
+
+
 B = BinarySearchTree()
 B.insert(B._root, 40)
 B.insert(B._root, 80)
@@ -101,3 +113,6 @@ print(B.rsearch(B._root, 8))
 
 # Count no. of Nodes
 print(B.count(B._root))
+
+# Height of the tree
+print(B.height(B._root))

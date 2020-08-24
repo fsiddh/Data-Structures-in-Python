@@ -97,17 +97,14 @@ class BinarySearchTree:
         q = QueuesLinked()
         t = self._root
 
-        print(t._element)
-
         q.enqueue(t)
 
         while not q.isempty():
             t = q.dequeue()
+            print(t._element)
             if t._left:
-                print(t._left._element)
                 q.enqueue(t._left)
             if t._right:
-                print(t._right._element)
                 q.enqueue(t._right)
 
 B = BinarySearchTree()

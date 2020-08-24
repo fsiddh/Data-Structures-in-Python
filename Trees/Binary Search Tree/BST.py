@@ -72,6 +72,13 @@ class BinarySearchTree:
             print(troot._element)
             self.rinorder(troot._right)
 
+    def count(self, troot):
+        if troot:
+            x = self.count(troot._left)
+            y = self.count(troot._right)
+            return x+y+1
+        return 0
+
 B = BinarySearchTree()
 B.insert(B._root, 40)
 B.insert(B._root, 80)
@@ -91,3 +98,6 @@ print(B.search(90))
 
 # Recurssive Search
 print(B.rsearch(B._root, 8))
+
+# Count no. of Nodes
+print(B.count(B._root))

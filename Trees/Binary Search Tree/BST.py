@@ -1,3 +1,6 @@
+from queueslinked import QueuesLinked
+
+
 class _Node:
     __slot__ = '_element', '_left', '_right'
     
@@ -90,6 +93,22 @@ class BinarySearchTree:
                 return y + 1
         return -1
 
+    def levelorder(self):
+        q = QueuesLinked()
+        t = self._root
+
+        print(t._element)
+
+        q.enqueue(t)
+
+        while not q.isempty():
+            t = q.dequeue()
+            if t._left:
+                print(t._left._element)
+                q.enqueue(t._left)
+            if t._right:
+                print(t._right._element)
+                q.enqueue(t._right)
 
 B = BinarySearchTree()
 B.insert(B._root, 40)
@@ -116,3 +135,6 @@ print(B.count(B._root))
 
 # Height of the tree
 print(B.height(B._root))
+
+# Level Order Traversal
+B.levelorder()

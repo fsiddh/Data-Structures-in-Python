@@ -64,7 +64,8 @@ if __name__ == "__main__":
     print('Vertices: ', G.vertex_count())
     G.display_adjMat()
     print('Edges: ', G.edge_count(), '\n')
-
+    
+    # Undirected Graph
     G.insert_edge(0, 1)
     G.insert_edge(1, 0)
 
@@ -92,3 +93,34 @@ if __name__ == "__main__":
     #Degree
     print('\n In-Degree of vertex 2: ', G.indegree(2))
     print('\n Out-Degree of vertex 2:', G.outdegree(2))
+
+    # Wighted Undirected Graph
+    print('\n Wighted Undirected Graph:')
+    G.insert_edge(0, 1, 26)
+    G.insert_edge(1, 0, 26)
+
+    G.insert_edge(0, 2, 16)
+    G.insert_edge(2, 0, 16)
+
+    G.insert_edge(1, 2, 12)
+    G.insert_edge(2, 1, 12)
+
+    G.insert_edge(2, 3, 8)
+    G.insert_edge(3, 2, 8)
+    G.display_adjMat()
+
+    # Wighted Directed Graph
+    # UnWighted Directed Graph
+    # Just add and remove w or weight from insert_edge to make it unweighted
+
+    # print('\n Wighted Directed Graph:')
+    # G.insert_edge(0, 1, 26)
+
+    # G.insert_edge(0, 2, 16)
+
+    # G.insert_edge(1, 2, 12)
+
+    # G.insert_edge(2, 3, 8)
+    # G.display_adjMat()
+    # print('\n Edges:')
+    # G.edges()

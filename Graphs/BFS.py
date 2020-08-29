@@ -62,9 +62,9 @@ class Graph:
     def BFS(self, s):
         i = s
         q = QueuesLinked()
-        visited = [0]*self._vertices
+        visited = [0] * self._vertices
 
-        print(i, end=' - ')
+        print(i, end=' | ')
         visited[i] = 1
         q.enqueue(i)
 
@@ -72,7 +72,7 @@ class Graph:
             i = q.dequeue()
             for j in range(self._vertices):
                 if self._adjMat[i][j] == 1 and visited[j] == 0:
-                    print(j, end=' - ')
+                    print(j, end=' | ')
                     visited[j] = 1
                     q.enqueue(j)
 
@@ -80,20 +80,18 @@ class Graph:
 if __name__ == "__main__":
     G = Graph(7)
 
-    G.insert_edge(0,1)
-    G.insert_edge(0,5)
-    G.insert_edge(0,6)
-    G.insert_edge(1,0)
-    G.insert_edge(1,2)
-    G.insert_edge(1,5)
-    G.insert_edge(1,6)
-    G.insert_edge(2,3)
-    G.insert_edge(2,4)
-    G.insert_edge(2,6)
-    G.insert_edge(3,4)
-    G.insert_edge(4,2)
-    G.insert_edge(4,5)
-    G.insert_edge(5,2)
-    G.insert_edge(5,3)
-    G.insert_edge(6,3)
-    G.BFS(0)
+    G.insert_edge(0, 2)
+    G.insert_edge(0, 3)
+
+    G.insert_edge(1, 3)
+    G.insert_edge(1, 2)
+
+    G.insert_edge(2, 1)
+
+    G.insert_edge(3, 0)
+
+    G.insert_edge(4, 1)
+    G.insert_edge(4, 2)
+    G.insert_edge(4, 3)
+
+    G.BFS(4)

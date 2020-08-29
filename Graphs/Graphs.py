@@ -59,8 +59,8 @@ class Graph:
     def display_adjMat(self):
         print(self._adjMat)
 
-    def BFS(self, source):
-        i = source
+    def BFS(self, s):
+        i = s
         q = QueuesLinked()
         visited = [0]*self._vertices
 
@@ -72,7 +72,7 @@ class Graph:
             i = q.dequeue()
             for j in range(self._vertices):
                 if self._adjMat[i][j] == 1 and visited[j] == 0:
-                    print(j)
+                    print(j, end=' - ')
                     visited[j] = 1
                     q.enqueue(j)
 

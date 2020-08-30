@@ -63,10 +63,10 @@ class Graph:
     
     def DFS(self, s):
         if self._visited[s] == 0:
-            print(s, end=' -- ')
+            print(s, end=' | ')
             self._visited[s] = 1
             for j in range(self._vertices):
-                if self._adjMat[s][j] == 1 and self._visited[s] == 0:
+                if self._adjMat[s][j] == 1 and self._visited[j] == 0:
                     self.DFS(j)
 
 

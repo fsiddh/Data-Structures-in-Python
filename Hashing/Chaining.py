@@ -3,8 +3,8 @@ from LinkedList import LinkedList
 class HashChain:
     def __init__(self):
         self.hashtable_size = 10
-        self.hashtable = [0] * self.hashtable_size
-        for i in range(self.hashtable_size):
+        self.hashtable = [0] * self.hashtable_size # self.hashtable = [LinkedList] * self._hashtable_size
+        for i in range(self.hashtable_size):       # The above commented code replaces the for loop!
             self.hashtable[i] = LinkedList()
 
     def hashcode(self, key):

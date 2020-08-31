@@ -15,8 +15,7 @@ class LinkedList:
         return self._size == 0  
 
     def insertsorted(self, e):
-        newest = _Node(e)
-        
+        newest = _Node(e, None)
         if self.isempty():
             self._head = newest
         else:
@@ -32,3 +31,22 @@ class LinkedList:
                 newest._next = q._next
                 q._next = newest
         self._size += 1
+
+    def search(self, key):
+        p = self._head
+        index = 0
+
+        while p:
+            if p == key:
+                return index
+            p = p._next
+            index += 1
+        return -1
+
+    def display(self):
+        p = self._head
+        while p:
+            print(p._element, end='-->')
+            p = p._next
+        print()
+

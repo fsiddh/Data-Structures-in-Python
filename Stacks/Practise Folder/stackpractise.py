@@ -32,7 +32,7 @@ class Stack:
             return 
         e = self._top._element
         self._top = self._top._next
-        size -= 1
+        self._size -= 1
         return e
 
     def top(self):
@@ -44,7 +44,7 @@ class Stack:
     def display(self):
         p = self._top
         while p:
-            print(p._element, '-->')
+            print(p._element, end='-->')
             p = p._next
         print() 
 

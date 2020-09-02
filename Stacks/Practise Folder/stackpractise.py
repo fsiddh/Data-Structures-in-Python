@@ -11,6 +11,9 @@ class Stack:
         self._top = None
         self._size = 0
 
+        self._postfix = list()
+        self._operators = ['*', '/', '%', '-', '+']
+
     def len(self):
         return self._size
 
@@ -35,6 +38,52 @@ class Stack:
         self._size -= 1
         return e
 
+    def priority(self, operator):
+        if operator == '*' or operator == '/' or operator == '%':
+            return 1
+        else:
+            return 0
+                
+    def itp(self, phrase):
+        p = self._top
+
+        for character in phrase:
+            if character == '(':  # Left Parenthesis
+                self.push(character)
+            elif character == ')':  # Right Parenthesis
+                p = self._top
+                while p:
+                    e = p._element
+                    p = p._next
+                    if e == ')':
+                        return 
+                    self._postfix.append(e)
+                    
+            elif character in self._operators:  # OPERATORS
+                if self.isempty():
+                    self.push(character)
+                elif self._top._element not in self._operators:
+                    self.push(character)
+                else:
+                    if self.priority(character) > self.priority(self._top._element):
+                        self.push(character)
+                    else:
+                        e = self.pop()
+                        self._postfix.append(e)                            
+            else:  # OPERANDS
+                self._postfix.append(character)
+
+        # To empty stack
+        temp = self._top
+        while temp:
+            e = self.pop()
+            self._postfix.append(e)
+            temp = temp._next
+        
+    def show_postfix(self):
+        result = ''.join(self._postfix)
+        print(result)
+
     def top(self):
         if self.isempty():
             print('Stack empty')
@@ -44,19 +93,17 @@ class Stack:
     def display(self):
         p = self._top
         while p:
-            print(p._element, end='-->')
+            print(p._element)
             p = p._next
         print() 
+
+    
 
 if __name__ == '__main__':
     S = Stack()
 
-    S.push(4)
-    S.push(8)
-    S.push(7)
-    S.push(2)
-    S.push(9)
-    S.display()
+    # S.push('A+B')
+    # S.display()
 
-    print(S.pop())
-    S.display()
+    S.itp('A+B')
+    S.show_postfix()

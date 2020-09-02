@@ -51,18 +51,13 @@ class Stack:
             if character == '(':  # Left Parenthesis
                 self.push(character)
             elif character == ')':  # Right Parenthesis
-                p = self._top
-                while p:
-                    e = p._element
-                    p = p._next
-                    if e == ')':
-                        return 
-                    self._postfix.append(e)
+                p = self.pop()
+                while p != '(':
+                    self._postfix.append(p)
+                    p = self.pop()
                     
             elif character in self._operators:  # OPERATORS
                 if self.isempty():
-                    self.push(character)
-                elif self._top._element not in self._operators:
                     self.push(character)
                 else:
                     if self.priority(character) > self.priority(self._top._element):
@@ -74,14 +69,14 @@ class Stack:
                 self._postfix.append(character)
 
         # To empty stack
-        temp = self._top
-        while temp:
+        while self._top:
             e = self.pop()
             self._postfix.append(e)
-            temp = temp._next
         
     def show_postfix(self):
         result = ''.join(self._postfix)
+        result = result.replace('(', '')
+        result = result.replace('(', '')
         print(result)
 
     def top(self):
@@ -105,5 +100,5 @@ if __name__ == '__main__':
     # S.push('A+B')
     # S.display()
 
-    S.itp('A+B')
+    S.itp('A-(B*C-D)/e')
     S.show_postfix()

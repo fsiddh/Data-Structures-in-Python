@@ -1,116 +1,102 @@
-# Author: Alaa Awad
-# Description: program converts infix to postfix notation
-import sys
-
-class Stack:
-     def __init__(self):
-         self.items = []
-
-     def isEmpty(self):
-         return self.items == []
-
-     def push(self, item):
-         self.items.append(item)
-
-     def pop(self):
-         return self.items.pop()
-
-     def peek(self):
-         return self.items[self.size()-1]
-
-     def size(self):
-         return len(self.items)
-
-class InfixConverter:
-    def __init__(self):
-        self.stack = Stack()
-        self.precedence = {'+':1, '-':1, '*':2, '/':2, '^':3}
-
-    def hasLessOrEqualPriority(self, a, b):
-        if a not in self.precedence:
-            return False
-        if b not in self.precedence:
-            return False
-        return self.precedence[a] <= self.precedence[b]
-
-    def isOperator(self, x):
-        ops = ['+', '-', '/', '*']
-        return x in ops
-
-    def isOperand(self, ch):
-        return ch.isalpha() or ch.isdigit()
-
-    def isOpenParenthesis(self, ch):
-        return ch == '('
-
-    def isCloseParenthesis(self, ch):
-        return ch == ')'
-
-    def toPostfix(self, expr):
-        expr = expr.replace(" ", "")
-        self.stack = Stack()
-        output = ''
-
-        for c in expr:
-            if self.isOperand(c):
-                output += c
+# Program to convert infix expression to postfix expression
+ 
+# method that returns the priority of the operator
+def priority(operator):
+    if operator == '+' or operator == '-':
+        return 1
+ 
+    elif operator == '*' or operator == '/' or operator == '%':
+        return 2
+ 
+    elif operator == '^':
+        return 3
+ 
+    else:
+        return 0
+ 
+# method that converts string in infix to postfix
+# all the strings are assumed to be valid expressions
+def in2postfix(infixString):
+    # taking a list variable to store operators
+    stack = []
+ 
+    # result string variable
+    postfixString = ""
+    i = 0
+ 
+    # loop till i is in the range of the length of string
+    while i in range(0, len(infixString)):
+ 
+        # if an alphabet is found then copy it to the output string
+        if infixString[i].isalpha():
+            postfixString += infixString[i]
+ 
+ 
+        # if an opening bracket is found then put it in stack
+        elif infixString[i] == '(' or infixString[i] == '[' or infixString[i] == '{':
+            stack.append(infixString[i])
+ 
+ 
+        # if an closing bracket is found then
+        # keep removing the operators from the stack and add them to postfix string until you find the corresponding opening bracket
+        elif infixString[i] == ')' or infixString[i] == ']' or infixString[i] == '}':
+ 
+            if infixString[i] == ')':
+                while stack[-1] != '(':
+                    postfixString += stack.pop()
+                stack.pop()
+ 
+            if infixString[i] == ']':
+                while stack[-1] != '[':
+                    postfixString += stack.pop()
+                stack.pop()
+ 
+            if infixString[i] == '}':
+                while stack[-1] != '{':
+                    postfixString += stack.pop()
+                stack.pop()
+ 
+        # if none of the above cases are satisfied then we surely have an operator
+        else:
+ 
+            # if the stack if empty then we simply put the operator in stack
+            if len(stack) == 0:
+                stack.append(infixString[i])
+ 
+            # if not then we compare the priority of the stack top and current operator
             else:
-                if self.isOpenParenthesis(c):
-                    self.stack.push(c)
-                elif self.isCloseParenthesis(c):
-                    operator = self.stack.pop()
-                    while not self.isOpenParenthesis(operator):
-                        output += operator
-                        operator = self.stack.pop()              
-                else:
-                    while (not self.stack.isEmpty()) and self.hasLessOrEqualPriority(c,self.stack.peek()):
-                        output += self.stack.pop()
-                    self.stack.push(c)
-
-        while (not self.stack.isEmpty()):
-            output += self.stack.pop()
-        return output
-    
-    '''
-     1. Reverse expression string
-     2. Replace open paren with close paren and vice versa
-     3. Get Postfix and reverse it
-    '''
-    def toPrefix(self, expr):
-        reverse_expr =''
-        for c in expr[::-1]:
-            if c == '(':
-                reverse_expr += ")"
-            elif c == ')':
-                reverse_expr += "("
-            else:
-                reverse_expr += c
-
-        reverse_postfix = self.toPostfix(reverse_expr)
-
-        return reverse_postfix[::-1]
-
-
-    def convert(self, expr):
-        try:
-            result = eval(expr);
-        except:
-            result = expr
-        print """
-            Original expr is: {}
-            Postfix is: {}
-            Prefix is: {}
-            result is: {}
-        """.format(expr, self.toPostfix(expr), self.toPrefix(expr), result)
-
-def main(argv):
-    infix = InfixConverter()
-    while True:
-        infix_expression = raw_input("Enter an expression in infix notation or 'exit' to stop: ")
-        if (infix_expression.lower() == 'exit'):
-            break
-        infix.convert(infix_expression)
-
-
-if __name__ == "__main__":
-    main(sys.argv)
+ 
+                # if the priority of current operator if high then push it onto the stack
+                if priority(infixString[i]) > priority(stack[-1]):
+                    stack.extend(infixString[i])
+ 
+ 
+                # if the priority of current operator is less than or equal to the stack top then
+                # pop the stack top and add it to the postfix string
+                elif priority(infixString[i]) <= priority(stack[-1]):
+                    postfixString += stack.pop()
+                    position = len(stack) - 1
+ 
+                    # now if you have an operator that has equal priority as of current operator then pop
+                    while position >= 0 and priority(stack[position]) == priority(infixString[i]):
+                        postfixString += stack.pop()
+                        position -= 1
+                        if position < 0:
+                            break
+ 
+                    stack.extend(infixString[i])
+ 
+        # increment the value of i
+        i += 1
+ 
+    # at the end remove all the operators from the stack
+    while len(stack) != 0:
+        postfixString += stack.pop()
+       
+    # return the result
+    return postfixString
+ 
+# main function
+infix = input("Enter the Infix Expression : ")
+postfix = in2postfix(infix)
+print("The converted Expression in Postfix is : " + postfix)

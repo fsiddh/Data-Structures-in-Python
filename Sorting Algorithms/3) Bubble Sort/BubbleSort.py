@@ -7,7 +7,7 @@ def bubblesort(A):
                 A[i] = A[i+1]
                 A[i+1] = temp
 
-
+# Main
 A = [3, 5, 8, 9, 6, 2]
 print('Original Array:',A)
 bubblesort(A)

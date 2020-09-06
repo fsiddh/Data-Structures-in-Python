@@ -40,6 +40,10 @@ if __name__ =='__main__':
     
     while elem != -1:
         elem = int(input())
+
+        if elem == -1:
+            print('The MOSORI algorithm has successfully terminated!')
+            break
+        
         mosori(elem, first_half, second_half)
-    if elem == -1:
-        print('The MOSORI algorithm has successfully terminated!')
+        
